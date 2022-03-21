@@ -28,14 +28,33 @@ public class UserService {
 
 		return listUserDTO;
 	}
-	
+
 	public UserDTO findById(String id) {
-		
+
 		Optional<User> objOptional = userRepository.findById(id);
-		
+
 		User entity = objOptional.orElseThrow(() -> new ResourceNotFoundException("Usuário " + id + " não encontrado"));
-		
+
 		return new UserDTO(entity);
+	}
+
+	public UserDTO insert(UserDTO userDTO) {
+
+		User entity = new User();
+
+		copyDtoToEntity(userDTO, entity);
+
+		userRepository.insert(entity);
+
+		return new UserDTO(entity);
+	}
+
+	private void copyDtoToEntity(UserDTO userDTO, User entity) {
+
+		entity.setId(userDTO.getId());
+		entity.setName(userDTO.getName());
+		entity.setEmail(userDTO.getEmail());
+
 	}
 
 }
