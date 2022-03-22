@@ -49,6 +49,25 @@ public class UserService {
 		return new UserDTO(entity);
 	}
 
+	public UserDTO update(UserDTO userDTO, String id) {
+		
+		//Recupera o registro da base de dados
+		UserDTO oldObj = findById(id);
+		
+		User entity = new User();
+		
+		//Se achou o registro copia dados para entidade 
+		copyDtoToEntity(oldObj, entity);
+		
+		//Atualiza entidade com informações do userDTO
+		updateEntity(userDTO, entity);
+		
+		entity = userRepository.save(entity);
+		
+		return new UserDTO(entity);
+		
+	}
+	
 	public void deleteById(String id) {
 
 		findById(id);
@@ -64,4 +83,11 @@ public class UserService {
 
 	}
 
+	private void updateEntity(UserDTO userDTO, User entity) {
+		
+		entity.setName(userDTO.getName());
+		entity.setEmail(userDTO.getEmail());
+		
+	}
+	
 }
