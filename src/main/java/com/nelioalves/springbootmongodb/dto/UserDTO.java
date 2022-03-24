@@ -1,7 +1,10 @@
 package com.nelioalves.springbootmongodb.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.nelioalves.springbootmongodb.entities.Post;
 import com.nelioalves.springbootmongodb.entities.User;
 
 public class UserDTO implements Serializable {
@@ -11,6 +14,7 @@ public class UserDTO implements Serializable {
 	private String id;
 	private String name;
 	private String email;
+	private List<PostDTO> postsDto = new ArrayList<>();
 
 	public UserDTO() {
 
@@ -28,6 +32,12 @@ public class UserDTO implements Serializable {
 		this.email = entity.getEmail();
 	}
 
+	public UserDTO(User entity, List<Post> posts) {
+		this(entity);
+		
+		posts.forEach(post -> this.postsDto.add(new PostDTO(post)));
+	}
+	
 	public String getId() {
 		return id;
 	}
@@ -50,6 +60,10 @@ public class UserDTO implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public List<PostDTO> getPostsDto() {
+		return postsDto;
 	}
 
 }

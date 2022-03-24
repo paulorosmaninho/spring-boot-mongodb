@@ -38,6 +38,15 @@ public class UserService {
 		return new UserDTO(entity);
 	}
 
+	public UserDTO findByIdPosts(String id) {
+		
+		Optional<User> objOptional = userRepository.findById(id);
+		
+		User entity = objOptional.orElseThrow(() -> new ResourceNotFoundException("Usuário " + id + " não encontrado"));
+		
+		return new UserDTO(entity, entity.getPosts());
+	}
+	
 	public UserDTO insert(UserDTO userDTO) {
 
 		User entity = new User();
