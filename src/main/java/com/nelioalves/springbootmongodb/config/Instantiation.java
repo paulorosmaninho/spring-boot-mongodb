@@ -34,12 +34,14 @@ public class Instantiation implements CommandLineRunner{
 		//Limpa coleção de posts no MongoDB
 		postRepository.deleteAll();
 
+		//Instancia e salva os usuários
 		User maria = new User(null, "Maria Brown", "maria@gmail.com");
 		User alex = new User(null, "Alex Green", "alex@gmail.com");
 		User bob = new User(null, "Bob Grey", "bob@gmail.com");
 		
 		userRepository.saveAll(Arrays.asList(maria, alex, bob));
 		
+		//Instancia e salva os posts com comentários
 		SimpleDateFormat sdf  = new SimpleDateFormat("dd/MM/yyyy");
 		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
 			

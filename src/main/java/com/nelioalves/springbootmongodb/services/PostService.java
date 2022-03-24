@@ -1,5 +1,7 @@
 package com.nelioalves.springbootmongodb.services;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,16 @@ public class PostService {
 		Post entity = objOptional.orElseThrow(() -> new ResourceNotFoundException("Post " + id + " não encontrado"));
 
 		return new PostDTO(entity);
+	}
+	
+	public List<PostDTO> findByTitle(String text) {
+		
+		List<Post> posts = postRepository.findByTitleContainingIgnoreCase(text);
+		List<PostDTO> postsDto = new ArrayList<>();
+		
+		posts.forEach(post -> postsDto.add(new PostDTO(post)));
+		
+		return postsDto;
 	}
 
 	
