@@ -28,15 +28,25 @@ public class PostService {
 		return new PostDTO(entity);
 	}
 	
+//	public List<PostDTO> findByTitle(String text) {
+//		
+//		List<Post> posts = postRepository.findByTitleContainingIgnoreCase(text);
+//		List<PostDTO> postsDto = new ArrayList<>();
+//		
+//		posts.forEach(post -> postsDto.add(new PostDTO(post)));
+//		
+//		return postsDto;
+//	}
+
 	public List<PostDTO> findByTitle(String text) {
 		
-		List<Post> posts = postRepository.findByTitleContainingIgnoreCase(text);
+		List<Post> posts = postRepository.searchTitle(text);
 		List<PostDTO> postsDto = new ArrayList<>();
 		
 		posts.forEach(post -> postsDto.add(new PostDTO(post)));
 		
 		return postsDto;
 	}
-
+	
 	
 }
