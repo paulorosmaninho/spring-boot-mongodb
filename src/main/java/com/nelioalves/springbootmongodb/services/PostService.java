@@ -1,6 +1,7 @@
 package com.nelioalves.springbootmongodb.services;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,6 +48,21 @@ public class PostService {
 		
 		return postsDto;
 	}
+	
+	public List<PostDTO> fullSearch(String text, Date minDate, Date maxDate) {
+		
+		//Soma 24 horas em maxDate para buscar todos os posts até o final do dia
+		//É preciso converter às 24 horas em milissegundos: 24 * 60 * 60 * 1000
+		maxDate = new Date(maxDate.getTime() + 24 * 60 * 60 * 1000);
+		
+		List<Post> posts = postRepository.fullSearch(text, minDate, maxDate);
+		List<PostDTO> postsDto = new ArrayList<>();
+		
+		posts.forEach(post -> postsDto.add(new PostDTO(post)));
+		
+		return postsDto;
+	}
+	
 	
 	
 }

@@ -37,7 +37,15 @@ public class PostDTO implements Serializable {
 		this.title = entity.getTitle();
 		this.body = entity.getBody();
 		this.author = entity.getAuthor();
+		this.comments = entity.getComments();
 	}
+	
+//	public PostDTO(Post entity, List<CommentDTO> comments) {
+//		this(entity);
+//		
+//		comments.forEach(post -> this.postsDto.add(new PostDTO(post)));
+//	}
+
 
 	public String getId() {
 		return id;

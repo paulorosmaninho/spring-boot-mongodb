@@ -1,5 +1,6 @@
 package com.nelioalves.springbootmongodb.controllers;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,27 @@ public class PostController {
 		
 		return ResponseEntity.ok().body(postsDTO);
 	}
-	
-	
 
+	
+	@GetMapping(value = "/fullsearch")
+	public ResponseEntity<List<PostDTO>> fullSearch(
+			@RequestParam(value = "text", defaultValue = "") String text,
+			@RequestParam(value = "minDate", defaultValue = "") String minDate,
+			@RequestParam(value = "maxDate", defaultValue = "") String maxDate){
+		
+		text = URL.decodeParam(text);
+		
+		//Converte a data mínima em string para Date. Se não for informada
+		//gera a data mínima do Java com new Date(0L)
+		Date min = URL.convertDate(minDate, new Date(0L));
+
+		//Converte a data máxima em string para Date. Se não for informada
+		//gera a data máxima do Java com new Date()
+		Date max = URL.convertDate(maxDate, new Date());
+		
+		List<PostDTO> postsDTO = postService.fullSearch(text, min, max);
+		
+		return ResponseEntity.ok().body(postsDTO);
+	}
+	
 }
